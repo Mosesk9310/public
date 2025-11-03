@@ -38,27 +38,12 @@ else {
 }
 ?>
 
-<form action="" method="POST">
-    <label for="field">Search by:</label>
-    <select name="field" required>
-        <option value="firstname">First Name</option>
-        <option value="surname">Surname</option>
-        <option value="email">Email</option>
-        <option value="date_of_birth">Date of Birth</option>
-    </select>
-
-    <label for="search">Search term:</label>
-    <input type="text" name="search" required />
-
-    <input type="submit" name="submit" value="Search" />
-</form>
-
 <?php
 
 echo '<ul>';
 foreach ($stmt as $row) {
     echo '<li>';
-    echo '<a href="edit.php?id=' . $row['firstname'] . '' . $row['surname'] . '">' . $row['firstname'] . ' ' . $row['surname'] . '</a> - ' . $row['email'] . ' - ' . $row['date_of_birth'];
+    echo '<a href="edit.php?email=' . $row['email'] . '">' . $row['firstname'] . ' ' . $row['surname'] . '</a> - ' . $row['email'] . ' - ' . $row['date_of_birth'];
     echo '</li>';
 }
 echo '</ul>';

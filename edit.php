@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
     $stmt->execute($_POST);
 
     echo "<P>Record updated successfully!</P>";
-    echo "<a href='view.php'>View Records</a>";
+    echo "<a href='index1.php'>View Records</a>";
 
     // Re-fetch the updated record for display (or redirect)
     $stmt = $pdo->prepare('SELECT * FROM person WHERE id = :id');
@@ -32,16 +32,26 @@ if (isset($_POST['submit'])) {
     $person = $stmt->fetch();
 } 
 // --- SCENARIO 2: Initial Page Load (SELECT) ---
-else if (isset($_GET['id'])) {
+else  {
     // Get the ID from the URL query string (e.g., edit.php?id=5)
-    $stmt = $pdo->prepare('SELECT * FROM person WHERE id = :id');
-    $stmt->execute(['id' => $_GET['id']]);
+    $stmt = $pdo->prepare('SELECT * FROM person WHERE email = :email');
+
+    $values = [
+        'email' => $_GET['email']
+    ];
+
+    $stmt->execute($values);
     $person = $stmt->fetch();
 }
 ?>
 
 <form action="edit.php" method="POST">
-    <input type="hidden" name="id" value="<?php echo $person['id'] ?? ''; ?>" />
+    <label for="ID">ID:</label>
+    <input type="id" name="id" value="<?php echo $person['id'] ?? ''; ?>" />
+    <br />
+    <label for="text">old id</label>
+    <input type="text" name="old_id" value="<?php echo $person['id'] ?? ''; ?>" />
+    <br />
     <label for="email">Email:</label>
     <input type="email" name="email" value="<?php echo $person['email'] ?? ''; ?>" />
     <br />
