@@ -44,6 +44,10 @@ echo '<ul>';
 foreach ($stmt as $row) {
     echo '<li>';
     echo '<a href="edit.php?email=' . $row['email'] . '">' . $row['firstname'] . ' ' . $row['surname'] . '</a> - ' . $row['email'] . ' - ' . $row['date_of_birth'];
+    echo '<form action="delete.php" method="get" style="display:inline;">
+            <input type="hidden" name="email" value="' . $row['email'] . '">
+            <input type="submit" value="Delete">
+          </form>';
     echo '</li>';
 }
 echo '</ul>';

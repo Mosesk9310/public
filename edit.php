@@ -47,10 +47,7 @@ else  {
 
 <form action="edit.php" method="POST">
     <label for="ID">ID:</label>
-    <input type="id" name="id" value="<?php echo $person['id'] ?? ''; ?>" />
-    <br />
-    <label for="text">old id</label>
-    <input type="text" name="old_id" value="<?php echo $person['id'] ?? ''; ?>" />
+    <input type="hidden" name="id" value="<?php echo $person['id'] ?? ''; ?>" />
     <br />
     <label for="email">Email:</label>
     <input type="email" name="email" value="<?php echo $person['email'] ?? ''; ?>" />
