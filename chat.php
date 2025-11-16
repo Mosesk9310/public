@@ -10,7 +10,6 @@ $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 if (isset($_POST['submit'])) {
     $stmt = $pdo->prepare('INSERT INTO message (text, personid)
         VALUES (:text, :personid)');
-    
     unset($_POST['submit']);
     $stmt->execute($_POST);
 }
@@ -24,10 +23,16 @@ foreach ($stmt as $row) {
     $personStmt->execute(['id' => $row['personid']]);
     $person = $personStmt->fetch(PDO::FETCH_ASSOC);
 
+    // Protect against missing or null data
+    $firstname = $person['firstname'] ?? 'Unknown';
+    $surname   = $person['surname'] ?? '';
+    $text      = $row['text'] ?? '';
+    $date      = $row['date'] ?? '';
+
     echo '<li><strong>' . htmlspecialchars($row['personid']) . ': ' .
-         htmlspecialchars($person['firstname']) . ' ' . htmlspecialchars($person['surname']) . 
-         ':</strong> ' . htmlspecialchars($row['text']) . 
-         ' <em>' . htmlspecialchars($row['date']) . '</em></li>';
+         htmlspecialchars($firstname) . ' ' . htmlspecialchars($surname) .
+         ':</strong> ' . htmlspecialchars($text) .
+         ' <em>' . htmlspecialchars($date) . '</em></li>';
 }
 echo '</ul>';
 ?>
@@ -46,8 +51,7 @@ echo '</ul>';
         ?>
     </select>
     <label>Chat message</label>
-    <input type="text" name="text" />
+    <input type="text" name="text" required />
     <input type="submit" name="submit" value="Submit" />
 </form>
 
-</form>
